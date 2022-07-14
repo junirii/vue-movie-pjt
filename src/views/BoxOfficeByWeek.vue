@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <h1>BoxOfficeByDay</h1>
+    <div>
+    <h1>{{title}}</h1>
     <div>
       <input type="date" v-model="selectedDate">
       <button @click="search">검색</button>
@@ -12,12 +12,13 @@
 <script>
 import RankTable from '../components/boxoffice/RankTable';
 
-export default{
+export default {
   components: {
     RankTable
   },
   data(){
     return {
+      title: '주간 박스오피스',
       selectedDate: '',
       list: []
     }
@@ -28,8 +29,13 @@ export default{
       this.getData(targetDt);
     },
     async getData(targetDt) {
-        const data = await this.getBoxOfficeByDay(targetDt);
-        this.list = data.boxOfficeResult.dailyBoxOfficeList;
+        const data = await this.getBoxOfficeByWeek(targetDt, '0');
+        this.list = data.boxOfficeResult.weeklyBoxOfficeList;
+
+        const capYearWeek = document.querySelector('#yearWeekTime');
+        const year = data.boxOfficeResult.yearWeekTime.substr(0, 4);
+        const week = data.boxOfficeResult.yearWeekTime.substr(4, 2);
+        capYearWeek.innerText = `${year}년 ${week}주차`;
     }
   },
   created(){
@@ -39,3 +45,7 @@ export default{
   }
 }
 </script>
+
+<style>
+
+</style>
