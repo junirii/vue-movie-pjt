@@ -31,11 +31,6 @@ export default {
     async getData(targetDt) {
         const data = await this.getBoxOfficeByWeek(targetDt, '0');
         this.list = data.boxOfficeResult.weeklyBoxOfficeList;
-
-        const capYearWeek = document.querySelector('#yearWeekTime');
-        const year = data.boxOfficeResult.yearWeekTime.substr(0, 4);
-        const week = data.boxOfficeResult.yearWeekTime.substr(4, 2);
-        capYearWeek.innerText = `${year}년 ${week}주차`;
     }
   },
   created(){
